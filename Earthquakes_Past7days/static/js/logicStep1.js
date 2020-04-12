@@ -26,19 +26,15 @@ let baseMaps = {
 
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
-	center: [43.7, -79.3],
-	zoom: 11,
+	center: [39.5, -98.5,],
+	zoom: 3,
 	layers: [satteliteStreets]
 })
 
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
-
-// Accessing the airport GeoJSON URL
-// let airportData = "https://raw.githubusercontent.com/Sukurudo/Mapping_Earthquakes/master/majorAirports.json";
-// let torontoData = "https://raw.githubusercontent.com/Sukurudo/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json"
-let torontoHoods = "https://raw.githubusercontent.com/Sukurudo/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json"
+let past7days = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
 
 // Create a style for the lines.
@@ -48,7 +44,7 @@ let myStyle = {
 }
 
 // Grabbing our GeoJSON data.
-d3.json(torontoHoods).then(function(data) {
+d3.json(past7days).then(function(data) {
     console.log(data);
   // Creating a GeoJSON layer with the retrieved data.
   L.geoJSON(data).addTo(map);
