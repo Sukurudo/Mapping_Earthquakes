@@ -53,13 +53,13 @@ let map = L.map('mapid', {
 
 // Create the earthquake layer for our map.
 let earthquakes = new L.layerGroup();
-let tplates = new L.layerGroup();
+let plates = new L.layerGroup();
 
 // We define an object that contains the overlays.
 // This overlay will be visible all the time.
 let overlays = {
 	"Earthquakes": earthquakes,
-	"Tectonic Plates": tplates
+	"Tectonic Plates": plates
   };
 
 // Then we add a control to the map that will allow the user to change
@@ -67,13 +67,6 @@ let overlays = {
 L.control.layers(baseMaps, overlays).addTo(map);
 
 
-
-
-// Create a style for the lines.
-let myStyle = {
-	color: "#ffffa1",
-	weight: 2
-}
 
 // Grabbing our GeoJSON data.
 d3.json(past7days).then(function(data) {
@@ -171,3 +164,20 @@ let legend = L.control({
 	  };
 	  
 	  legend.addTo(map);
+
+
+	  // Retrieve and Display Plate info
+d3.json(tPlates).then(function(data) {
+	function styleInfo(feature) {
+	  return {
+		color: "orange",
+		weight: 2
+	  };
+	}
+	 // Creating a GeoJSON layer with the retrieved data.
+	L.geoJson(data, {
+	style: styleInfo,
+	}).addTo(plates);
+	// Add Plate  layer to map
+	plates.addTo(map);
+  });
